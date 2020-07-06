@@ -36,6 +36,11 @@ brks_pid_t brks_spawn_process(char *name, brks_spawn_proc_pt proc)
         }
     }
 
+    if(s >= BRKS_MAX_CONNECTION_NUM)
+    {
+        LOG_ERROR("s >= BRKS_MAX_CONNECTION_NUM");
+        return BRKS_INVALID_PID;
+    }
     if (socketpair(AF_UNIX, SOCK_STREAM, 0, brks_processes[s].channel) == -1)
     {
         LOG_ERROR("socketpair() failed while spawning \"%s\"", name);
